@@ -1,0 +1,129 @@
+<!--
+ - Created by dmitriygeforce on 15.07.17.
+ -->
+
+<apex:page id="ShoppingCart" controller="ShoppingCartController">
+
+
+    <apex:stylesheet value="{!$Resource.templatemostylecss}"/>
+    <apex:stylesheet value="{!$Resource.nivoslidercss}"/>
+    <apex:stylesheet value="{!$Resource.ddsmoothmenucss}"/>
+
+
+    <apex:form >
+        <apex:pageBlock id="applications">
+            <apex:pageMessages />
+
+            <apex:insert name="header">
+                <c:HeaderSite />
+            </apex:insert>
+
+            <div id="templatemo_main">
+                <div id="content" class="float_r">
+                    <h1>Shopping Cart</h1>
+                    <br/>
+                    <table width="700px" cellspacing="1" cellpadding="3">
+                        <tr>
+                            <th width="220" align="left">Product</th>
+                            <th width="180" align="left">Description</th>
+                            <th width="100" align="center">Quantity</th>
+                            <th width="60" align="right">Price</th>
+                            <th width="60" align="right">Total</th>
+                            <th width="90"></th>
+                        </tr>
+                        <br />
+                        <apex:repeat value="{!userProductApplications}" var="application" >
+                            <tr>
+                                <th width="220" align="left">
+                                    <a href="productdetail.html">
+                                    {!application.Product__r.Name}
+                                        <br />
+                                        <apex:image url="{!URLFOR($Resource.tvImages, 'tv/'+ application.Product__r.ImageFileName__c)}"
+                                                alt="application.Product__r.Name" height="170" width="170"/>
+                                    </a>
+                                </th>
+                                <th width="180" align="left">
+                                    <apex:outputField value="{!application.Product__r.Product_Description__c}"/>
+                                </th>
+                                <th width="280" align="center">
+                                    <apex:inputText value="{!application.CountProduct__c}" size="2" />
+                                    <apex:commandButton value="Change" action="{!changeQuantityOfProduct}"
+                                                        reRender="applications">
+                                        <apex:param name="setApplicationId" value="{!application.Id}"
+                                                    assignTo="{!applicationId}"/>
+                                    </apex:commandButton>
+                                </th>
+                                <th width="60" align="right">
+                                    <apex:outputField value="{!application.Product__r.Price__c}"/>
+                                </th>
+                                <th width="60" align="right">
+                                    <apex:outputText value="{!application.Product__r.Price__c * application.CountProduct__c}"/>
+                                </th>
+                                <th align="left">
+                                    <apex:commandLink action="{!deleteApplication}" reRender="applications">
+                                        <apex:param name="setApplicationId" value="{!application.Id}"
+                                                    assignTo="{!applicationId}"/>
+                                        <apex:image url="{!URLFOR($Resource.image, '/images/remove_x.gif')}"/>
+                                        <br/>
+                                        Delete
+                                    </apex:commandLink>
+                                </th>
+                                <th width="70"></th>
+                            </tr>
+                            <!--<apex:outputField value="{!application.Product__r.Name}"/>-->
+                            <!--<apex:outputField value="{!application.Product__r.Price__c}"/>-->
+                            <!--<apex:outputField value="{!application.CountProduct__c}"/>-->
+                        </apex:repeat>
+
+
+                        <tr>
+                            <td colspan="4" align="right" style="background:#ddd; font-weight:bold"> Total</td>
+                            <td align="right" style="background:#ddd; font-weight:bold">
+                                <apex:outputText value="{!totalAmount}"/>
+                            </td>
+                            <td style="background:#ddd; font-weight:bold"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="right">
+                                <apex:commandLink action="{!buyProducts}" reRender="testrer">
+                                    <apex:image url="{!$Resource.Buy_now_button}" width="150" height="60"/>
+                                </apex:commandLink>
+                                <apex:commandLink action="{!cancelBuyingProducts}" reRender="testrer">
+                                    <apex:image url="{!$Resource.CancelButton}" width="140" height="55"/>
+                                </apex:commandLink>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="cleaner"></div>
+            </div> <!-- END of templatemo_main -->
+
+
+            <!--<apex:pageMessages id="error"/>-->
+            <!--<apex:pageBlockSection title="Shopping Cart" id="appsProducts">-->
+            <!--<apex:repeat value="{!testCount}" var="shop">-->
+            <!--<apex:outputText value="{!shop.TotalCountProduct__c}" escape="false"/>-->
+            <!--</apex:repeat>-->
+
+            <!--<apex:repeat value="{!userProductApplications}" var="application">-->
+            <!--<apex:outputField value="{!application.Product__r.Name}"/>-->
+            <!--<apex:outputField value="{!application.Product__r.Price__c}"/>-->
+            <!--<apex:outputField value="{!application.CountProduct__c}"/>-->
+            <!--<apex:commandLink value="Delete" action="{!deleteApplication}"-->
+            <!--reRender="appsProducts, appsProductsDiv">-->
+            <!--<apex:param name="setApplicationId" value="{!application.Id}" assignTo="{!applicationId}"/>-->
+            <!--</apex:commandLink>-->
+            <!--</apex:repeat>-->
+            <!--Total amount:-->
+            <!--<apex:outputText value="{!totalAmount}"/>-->
+            <!--</apex:pageBlockSection>-->
+            <!--<apex:pageBlockButtons>-->
+            <!---->
+            <!--</apex:pageBlockButtons>-->
+            <apex:insert name="footer">
+                <c:footerSite />
+                <hr/>
+            </apex:insert>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

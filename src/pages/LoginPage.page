@@ -1,0 +1,21 @@
+<!--
+ - Created by dmitriygeforce on 16.07.17.
+ -->
+
+<apex:page id="LoginPage" controller="LoginPageController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageMessages />
+            <apex:pageBlockSection >
+                Username:
+                <apex:inputText value="{!username}"/>
+                Password:
+                <apex:inputSecret value="{!password}"/>
+                <apex:commandButton value="Login" action="{!checkLogin}" />
+            </apex:pageBlockSection>
+            <apex:outputLink value="{!$Page.RegistrationSite}">
+                Create new user!
+            </apex:outputLink>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

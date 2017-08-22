@@ -1,0 +1,252 @@
+<!--
+ - Created by dell on 7/14/2017.
+ -->
+
+
+<apex:page id="home" controller="HomeController" standardStylesheets="false" showHeader="false">
+    <apex:pageBlock id="block">
+        <apex:form >
+            <apex:includeScript value="{!$Resource.jqueryminjs}"/>
+            <apex:includeScript value="{!$Resource.ddsmoothmenu}"/>
+            <!--<apex:stylesheet value="{!$Resource.templatemostylecss}"/>-->
+            <apex:stylesheet value="{!$Resource.nivoslidercss}"/>
+            <apex:stylesheet value="{!$Resource.ddsmoothmenucss}"/>
+            <link href="{!URLFOR($Resource.templatemo, '/templatemo_style.css')}" rel="stylesheet"/>
+            <script type="text/javascript">
+                ddsmoothmenu.init({
+                    mainmenuid: "top_nav", //menu DIV id
+                    orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+                    classname: 'ddsmoothmenu', //class added to menu's outer DIV
+                    //customtheme: ["#1c5a80", "#18374a"],
+                    contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+                })
+            </script>
+
+            <div id="templatemo_body_wrapper">
+                <div id="templatemo_wrapper">
+                    <div id="templatemo_header">
+
+                        <div id="site_title">
+                            <h1><a href="#">Online Store</a></h1></div>
+                        <div id="header_right">
+                            <p>
+                                <a href="#">My Account</a> | <a href="#">My Wishlist</a> | <a href="#">My Cart</a> |
+                                <a href="#">Checkout</a> |
+                                <apex:outputLink value="{!$Page.LoginPage}">
+                                    Login
+                                </apex:outputLink>
+                            </p>
+                            <p>
+                                Shopping Cart: <strong>
+                                <apex:outputText value="{!NumberInCart}" id="NumberOfCart"/>
+                                items</strong>(
+                                <apex:outputLink value="{!$Page.ShoppingCart}"> My Cart
+                                </apex:outputLink>
+                                )
+                                <apex:outputText value="    Hello "/>
+                                <strong><apex:outputText value="{!userName}"/></strong>
+                            </p>
+                        </div>
+                        <div class="cleaner"></div>
+                    </div> <!-- header -->
+                    <!--------------------------------------------------------------------------------------------------->
+                    <div id="templatemo_menubar">
+                        <div id="top_nav" class="ddsmoothmenu">
+                            <ul>
+                                <li>
+                                    <apex:outputLink value="{!$Page.home}">
+                                        Home
+                                    </apex:outputLink>
+                                    <!--<a href="index.html" class="selected">Home</a>-->
+                                </li>
+                                <li>
+                                    <apex:outputLink value="{!$Page.home}">
+                                        Product
+                                    </apex:outputLink>
+                                    <!--<apex:commandLink action="{!assingToCategory}" reRender="block">-->
+                                        <!--<apex:param name="q" value="Null" assignTo="{!category}"/>-->
+                                        <!--Product-->
+                                    <!--</apex:commandLink>-->
+                                    <!--<ul>-->
+                                    <!--<apex:repeat value="{!categories}" var="cat">-->
+                                    <!--<li>-->
+                                    <!--<apex:commandLink action="{!assingToCategory}" reRender="block">-->
+                                    <!--<apex:param name="q" value="{!cat.Name}" assignTo="{!category}"/>-->
+                                    <!--{!cat.Name}-->
+                                    <!--</apex:commandLink>-->
+
+                                    <!--</li>-->
+                                    <!--</apex:repeat>-->
+                                    <!--</ul>-->
+                                </li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">FAQs</a></li>
+                                <li><a href="#">Checkout</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                            </ul>
+                            <br style="clear: left"/>
+                        </div> <!-- end of ddsmoothmenu -->
+                        <div id="templatemo_search">
+                            <form action="#" method="get">
+                                <input type="text" value=" " name="keyword" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field"/>
+                                <input type="submit" name="Search" value=" " alt="Search" id="searchbutton" title="Search" class="sub_btn"/>
+                            </form>
+                        </div>
+                    </div><!-- END of templatemo_menubar -->
+
+
+                    <!--------------------------------------------------------------------------------------------------->
+                    <div id="templatemo_main">
+                        <div id="sidebar" class="float_l">
+                            <div class="sidebar_box"><span class="bottom"></span>
+                                <h3>Categories</h3>
+                                <div class="content">
+                                    <ul class="sidebar_list">
+
+                                        <ul>
+                                            <li class="first">
+                                                <apex:commandLink action="{!assingToCategory}" reRender="body">
+                                                    <apex:param name="q" value="Null" assignTo="{!category}"/>
+                                                    All Product
+                                                </apex:commandLink>
+                                            </li>
+                                            <apex:repeat value="{!categories}" var="cat">
+                                                <li>
+                                                    <apex:commandLink action="{!assingToCategory}" reRender="body">
+                                                        <apex:param name="q" value="{!cat.Name}"
+                                                                    assignTo="{!category}"/>
+                                                            {!cat.Name}
+                                                    </apex:commandLink>
+
+                                                </li>
+                                            </apex:repeat>
+                                        </ul>
+                                        <!--<li class="last"><a href="#">Sed eget purus</a></li>-->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <apex:pageBlock id="body">
+                        <div id="content" class="float_r">
+                            <apex:includeScript value="{!$Resource.jquery143min}"/>
+                            <apex:includeScript value="{!$Resource.jquerynivosliderpack}"/>
+
+
+                            <apex:repeat value="{!shops}" var="pr">
+                                <div class="product_box">
+                                    <h3>{!pr.Product__r.Name}</h3>
+                                    <a href="productdetail.html">
+                                        <apex:image url="{!URLFOR($Resource.tvImages, 'tv/'+ pr.Product__r.ImageFileName__c)}"
+                                                alt="pr.Product__r.Name" height="170" width="170"/>
+                                    </a>
+                                    <p>{!pr.Product__r.Size__c}, {!pr.Product__r.Resolution__c} </p>
+                                    <p class="product_price">$ {!pr.Product__r.Price__c}</p>
+                                    <!--<apex:commandLink action="{!addProductToApplications}" value="Add to Cart"-->
+                                    <!--reRender="NumberOfCart">-->
+                                    <!--<apex:param name="q" value="{!pr.Product__r.id}" assignTo="{!productId}"/>-->
+                                    <!--</apex:commandLink>-->
+                                    <p align="center">
+                                        <apex:commandLink action="{!addProductToApplications}"
+                                                          reRender="NumberOfCart">
+                                            <apex:param name="q" value="{!pr.Product__r.id}" assignTo="{!productId}"/>
+                                            <apex:image url="{!URLFOR($Resource.templatemo, '/images/templatemo_addtocart.png')}"/>
+                                        </apex:commandLink>
+                                        <!--<a href="shoppingcart.html" class="addtocart"></a>-->
+                                        <!--<a href="productdetail.html" class="detail"></a>-->
+                                    </p>
+
+                                </div>
+                                <!--<div>-->
+                                <!--{!pr.Product__r.Name}-->
+                                <!--{!pr.Product__r.Price__c}-->
+                                <!--{!pr.TotalCountProduct__c}-->
+
+                                <!--</div>-->
+                            </apex:repeat>
+
+                        </div>
+                        </apex:pageBlock>
+                        <div class="cleaner"></div>
+                    </div><!-- END of templatemo_main -->
+                    <!--------------------------------------------------------------------------------------------------->
+
+
+                    <!--<div>-->
+                    <!--<apex:commandLink action="{!assingToCategory}" reRender="block">-->
+                    <!--<apex:param name="q" value="Null" assignTo="{!category}"/>-->
+                    <!--All-->
+                    <!--</apex:commandLink>-->
+
+                    <!--<apex:repeat value="{!categories}" var="cat">-->
+                    <!--<apex:commandLink action="{!assingToCategory}" reRender="block">-->
+                    <!--<apex:param name="q" value="{!cat.Name}" assignTo="{!category}"/>-->
+                    <!--{!cat.Name}-->
+                    <!--</apex:commandLink>-->
+                    <!--</apex:repeat>-->
+                    <!--</div>-->
+                    <!--<br/>-->
+
+                    <!--<div id="product">-->
+                    <!--<apex:repeat value="{!prod}" var="pr">-->
+                    <!--<div>-->
+                    <!--{!pr.Product__r.Name}-->
+                    <!--{!pr.Product__r.Price__c}-->
+                    <!--{!pr.TotalCountProduct__c}-->
+                    <!--<apex:commandLink action="{!addProductToApplications}" value="Add to Cart"-->
+                    <!--reRender="NumberOfCart">-->
+                    <!--<apex:param name="q" value="{!pr.Product__r.id}" assignTo="{!productId}"/>-->
+                    <!--</apex:commandLink>-->
+                    <!--</div>-->
+                    <!--</apex:repeat>-->
+
+
+                    <!--<div>-->
+                    <!--<apex:outputLink value="{!$Page.ShoppingCart}">-->
+                    <!--Cart-->
+                    <!--</apex:outputLink>-->
+                    <!--<apex:outputText value=" - "/>-->
+                    <!--<apex:outputText value="{!numberOfProductInCart}" id="NumberOfCar"/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<apex:outputText value="     "/>-->
+                    <!--<apex:outputLink value="{!$Page.LoginPage}">-->
+                    <!--Login-->
+                    <!--</apex:outputLink>-->
+                    <!--<apex:outputText value=" | "/>-->
+                    <!--<apex:outputLink value="{!$Page.RegistrationSite}">-->
+                    <!--Registration-->
+                    <!--</apex:outputLink>-->
+
+                    <!--<apex:outputText value="  -  Hello "/>-->
+                    <!--<apex:outputText value="{!userName}"/>-->
+                    <!--<br/>-->
+                    <!--<br/>-->
+
+
+                    <!--</apex:pageBlock>-->
+                    <!--<apex:pageBlock id="block2">-->
+                    <!--<apex:pageBlockSection columns="1">-->
+                    <!--<apex:repeat value="{!applications}" var="app">-->
+                    <!--<apex:outputField value="{!app.Contact__r.Name}"/> {!app.Contact__r.Name}-->
+                    <!--{!app.Product__r.Name}-->
+                    <!--{!app.CountProduct__c}-->
+                    <!--{!app.Product__r.Price__c}-->
+                    <!--</apex:repeat>-->
+                    <!--</apex:pageBlockSection>-->
+
+
+                    <!--<div id="templatemo_footer">-->
+                        <!--<p><a href="#">Home</a> | <a href="#">Products</a> | <a href="#">About</a> | <a-->
+                                <!--href="#">FAQs</a> | <a-->
+                                <!--href="#">Checkout</a> | <a href="#">Contact Us</a>-->
+                        <!--</p>-->
+                        <!--Copyright © 2072 <a href="#">Salesforce.com</a></div>-->
+                    <apex:insert name="footer">
+                        <c:footerSite />
+                        <hr/>
+                    </apex:insert>
+                </div> <!-- END of templatemo_wrapper -->
+            </div> <!-- END of templatemo_body_wrapper -->
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

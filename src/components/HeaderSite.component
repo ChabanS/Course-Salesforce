@@ -1,0 +1,30 @@
+<!--
+ - Created by dell on 7/18/2017.
+ -->
+
+<apex:component id="HeaderSite">
+    <!--<div id="templatemo_header">-->
+        <!--<div id="site_title">-->
+            <!--<h1><a href="#">Online Store</a></h1></div>-->
+        <!--<div id="header_right">-->
+            <!--<p>-->
+                <!--<a href="#">My Account</a> | <a href="#">My Wishlist</a> | <a href="#">My Cart</a> |-->
+                <!--<a href="#">Checkout</a> |-->
+                <!--<apex:outputLink value="{!$Page.LoginPage}">-->
+                    <!--Login-->
+                <!--</apex:outputLink>-->
+            <!--</p>-->
+            <!--<p>-->
+                <!--Shopping Cart: <strong>-->
+                <!--<apex:outputText value="{!numberOfProductInCart}" id="NumberOfCart"/>-->
+                <!--items</strong>(-->
+                <!--<apex:outputLink value="{!$Page.ShoppingCart}"> My Cart-->
+                <!--</apex:outputLink>-->
+                <!--)-->
+                <!--<apex:outputText value="    Hello "/>-->
+                <!--<strong><apex:outputText value="{!userName}"/></strong>-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="cleaner"></div>-->
+    <!--</div> &lt;!&ndash; header &ndash;&gt;-->
+</apex:component>

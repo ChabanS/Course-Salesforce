@@ -1,0 +1,31 @@
+<!--
+ - Created by dell on 7/16/2017.
+ -->
+
+<apex:page id="Registration" controller="RegistrationSiteController">
+    <apex:outputText value="Registration"/>
+    <br/>
+    <apex:pageMessages id="error"/>
+    <apex:form id="RegistrationForm">
+        <apex:outputPanel id="RegPanel" layout="block">
+            <apex:panelGrid columns="2" style="margin-top:1em;">
+                <apex:outputLabel value="Username" for="username"/>
+                <apex:inputText required="true" id="username" value="{!username}"/>
+                <apex:outputLabel value="Email" for="email"/>
+                <apex:inputText id="email" required="true" value="{!email}"/>
+                <apex:outputLabel value="Phone" for="phone"/>
+                <apex:inputText id="phone" required="true" value="{!phone}"/>
+                <apex:outputLabel value="Password" for="password"/>
+                <apex:inputSecret id="password" value="{!password}"/>
+                <apex:outputLabel value="ConfirmPassword" for="confirmPassword"/>
+                <apex:inputSecret id="confirmPassword" value="{!confirmPassword}"/>
+                <apex:outputText value=""/>
+                <apex:commandButton action="{!registerUser}" value="Submit" id="submit"/>
+            </apex:panelGrid>
+        </apex:outputPanel>
+        <br/>
+        <apex:outputLink value="{!$Page.home}">
+        Home
+        </apex:outputLink>
+    </apex:form>
+</apex:page>
